@@ -1,7 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { useGetAllPostsQuery } from '../../app/services/postsApi';
+import { CreatePost } from '../../components/create-post';
 
 export const Posts = () => {
-	return (
-		<div>Posts</div>
-	)
-}
+  const { data } = useGetAllPostsQuery();
+  return (
+    <>
+      <div className="w-full mb-10">
+        <CreatePost />
+      </div>
+    </>
+  );
+};
