@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Input } from '../components/input';
+import { Input } from '../../components/input';
 import { Button, Link } from '@nextui-org/react';
-import { useLazyCurrentQuery, useLoginMutation } from '../app/services/userApi';
+import {
+  useLazyCurrentQuery,
+  useLoginMutation,
+} from '../../app/services/userApi';
 import { useNavigate } from 'react-router-dom';
-import { ErrorMessage } from '../components/error-message';
-import { hasErrorField } from "../utils/has-error-field"
+import { ErrorMessage } from '../../components/error-message';
+import { hasErrorField } from '../../utils/has-error-field';
 
 type Login = {
   email: string;
@@ -38,6 +41,8 @@ export const Login: React.FC<Props> = ({ setSelected }) => {
   const onSubmit = async (data: Login) => {
     try {
       await login(data).unwrap();
+      await triggerCurrentCuery().unwrap();
+      navigate('/');
     } catch (error) {
       if (hasErrorField(error)) {
         setError(error.data.error);
@@ -72,7 +77,7 @@ export const Login: React.FC<Props> = ({ setSelected }) => {
           Створіть його!
         </Link>
       </p>
-      <div className="flex gap-2 justify-end">
+      <div className="flex justify-end gap-2">
         <Button fullWidth color="primary" type="submit" isLoading={isLoading}>
           Ввійти
         </Button>

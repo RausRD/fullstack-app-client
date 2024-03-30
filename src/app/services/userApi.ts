@@ -1,5 +1,5 @@
-import { api } from './api';
 import { User } from '../types';
+import { api } from './api';
 
 export const userApi = api.injectEndpoints({
   endpoints: builder => ({
@@ -25,13 +25,13 @@ export const userApi = api.injectEndpoints({
     }),
     current: builder.query<User, void>({
       query: () => ({
-        url: '/corrent',
+        url: '/current',
         method: 'GET',
       }),
     }),
     getUserById: builder.query<User, string>({
       query: id => ({
-        url: `/user/${id}`,
+        url: `/users/${id}`,
         method: 'GET',
       }),
     }),

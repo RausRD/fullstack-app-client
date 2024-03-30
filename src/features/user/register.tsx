@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Input } from '../components/input';
+import { Input } from '../../components/input';
 import { useForm } from 'react-hook-form';
 import { Button, Link } from '@nextui-org/react';
-import { useRegisterMutation } from '../app/services/userApi';
-import { hasErrorField } from "../utils/has-error-field"
-import { ErrorMessage } from "../components/error-message"
+import { useRegisterMutation } from '../../app/services/userApi';
+import { hasErrorField } from '../../utils/has-error-field';
+import { ErrorMessage } from '../../components/error-message';
 
 type Register = {
   email: string;
@@ -36,13 +36,13 @@ export const Register: React.FC<Props> = ({ setSelected }) => {
 
   const onSubmit = async (data: Register) => {
     try {
-			await register(data).unwrap()
-			setSelected('login')
+      await register(data).unwrap();
+      setSelected('login');
     } catch (error) {
-			if (hasErrorField(error)) {
-				setError(error.data.error)
-			}
-		}
+      if (hasErrorField(error)) {
+        setError(error.data.error);
+      }
+    }
   };
 
   return (
@@ -68,7 +68,7 @@ export const Register: React.FC<Props> = ({ setSelected }) => {
         type="password"
         required="Обов'язкове поле"
       />
-			<ErrorMessage error={error}/>
+      <ErrorMessage error={error} />
       <p className="text-center text-small">
         Вже є обліковий запис?{' '}
         <Link
