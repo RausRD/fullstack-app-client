@@ -9,6 +9,9 @@ import { GoBack } from "../../components/go-back";
 import { BASE_URL } from "../../constants";
 import { MdOutlinePersonAddAlt1, MdOutlinePersonAddDisabled } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
+import { ProfileInfo } from "../../components/profile-info";
+import { formatToClientDate } from "../../utils/format-to-client-date";
+import { CountInfo } from "../../components/count-info";
 
 export const UserProfile = () => {
 	const { id } = useParams<{ id: string }>();
@@ -40,18 +43,26 @@ export const UserProfile = () => {
 						{data.name}
 						{
 							currentUser.id !== id ? (
-								<Button color={data.isFollowing ? 'default' : 'primary'} variant="flat" className='gap-2' endContent={data.isFollowing ? (<MdOutlinePersonAddDisabled/>) : (
-									<MdOutlinePersonAddAlt1 />)}>
-									{data.isFollowing ? 'Відписатись' : 'Підписатись'}
+								<Button color={data.isFollowing ? "default" : "primary"} variant="flat" className="gap-2"
+								        endContent={data.isFollowing ? (<MdOutlinePersonAddDisabled />) : (
+									        <MdOutlinePersonAddAlt1 />)}>
+									{data.isFollowing ? "Відписатись" : "Підписатись"}
 								</Button>
 							) : (
-								<Button endContent={<CiEdit/>}>Редагувати</Button>
+								<Button endContent={<CiEdit />}>Редагувати</Button>
 							)
 						}
 					</div>
 				</Card>
-				<Card className='flex flex-col space-y-4 p-5 flex-1'>
-				
+				<Card className="flex flex-col space-y-4 p-5 flex-1">
+					<ProfileInfo title="Пошта" info={data.email} />
+					<ProfileInfo title="Місцезнаходження" info={data.location} />
+					<ProfileInfo title="Дата народження" info={formatToClientDate(data.dateOfBirth)} />
+					<ProfileInfo title="Про мене" info={data.bio} />
+					<div className='flex gap-2'>
+					<CountInfo count={data.followers.length} title='Підписники'/>
+					<CountInfo count={data.following.length} title='Підписки'/>
+					</div>
 				</Card>
 			</div>
 		</>
