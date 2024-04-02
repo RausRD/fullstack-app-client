@@ -1,13 +1,13 @@
-import React from 'react';
-import { useGetAllPostsQuery } from '../../app/services/postsApi';
-import { CreatePost } from '../../components/create-post';
 import { Card } from '../../components/card';
+import { CreatePost } from '../../components/create-post';
+import { useGetAllPostsQuery } from '../../app/services/postsApi';
 
 export const Posts = () => {
   const { data } = useGetAllPostsQuery();
+
   return (
     <>
-      <div className="w-full mb-10">
+      <div className="flex w-full mb-10">
         <CreatePost />
       </div>
       {data && data.length > 0

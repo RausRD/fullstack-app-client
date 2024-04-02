@@ -1,34 +1,32 @@
-import React from 'react';
+import { Button, Textarea } from '@nextui-org/react';
+import { IoMdCreate } from 'react-icons/io';
 import {
   useCreatePostMutation,
   useLazyGetAllPostsQuery,
 } from '../../app/services/postsApi';
-import { Controller, useForm } from 'react-hook-form';
-import { Button, Textarea } from '@nextui-org/react';
+import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '../error-message';
-import { IoMdCreate } from 'react-icons/io';
 
 export const CreatePost = () => {
   const [createPost] = useCreatePostMutation();
-  const [triggerAllPosts] = useLazyGetAllPostsQuery();
-
+  const [triggerGetAllPosts] = useLazyGetAllPostsQuery();
   const {
     handleSubmit,
     control,
     formState: { errors },
     setValue,
   } = useForm();
-  const error = errors?.post?.message as string;
 
   const onSubmit = handleSubmit(async data => {
     try {
       await createPost({ content: data.post }).unwrap();
-			setValue('post', '')
-			await triggerAllPosts().unwrap()
+      setValue('post', '');
+      await triggerGetAllPosts().unwrap();
     } catch (error) {
-      console.log(error);
+      console.log('err', error);
     }
   });
+  const error = errors?.post?.message as string;
 
   return (
     <form className="flex-grow" onSubmit={onSubmit}>
@@ -36,12 +34,14 @@ export const CreatePost = () => {
         name="post"
         control={control}
         defaultValue=""
-        rules={{ required: "Обов'язкове поле" }}
+        rules={{
+          required: 'Обязательное поле',
+        }}
         render={({ field }) => (
           <Textarea
             {...field}
             labelPlacement="outside"
-            placeholder="Про що думаєте?"
+            placeholder="О чем думайте?"
             className="mb-5"
           />
         )}
@@ -53,7 +53,7 @@ export const CreatePost = () => {
         endContent={<IoMdCreate />}
         type="submit"
       >
-        Додати пост
+        Добавить пост
       </Button>
     </form>
   );

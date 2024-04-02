@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { Input } from '../../components/input';
+import { useForm } from 'react-hook-form';
 import { Button, Link } from '@nextui-org/react';
 import {
   useLazyCurrentQuery,
   useLoginMutation,
 } from '../../app/services/userApi';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { ErrorMessage } from '../../components/error-message';
 import { hasErrorField } from '../../utils/has-error-field';
 
@@ -19,7 +19,7 @@ type Props = {
   setSelected: (value: string) => void;
 };
 
-export const Login: React.FC<Props> = ({ setSelected }) => {
+export const Login = ({ setSelected }: Props) => {
   const {
     handleSubmit,
     control,
@@ -36,20 +36,19 @@ export const Login: React.FC<Props> = ({ setSelected }) => {
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
   const [error, setError] = useState('');
-  const [triggerCurrentCuery] = useLazyCurrentQuery();
+  const [triggerCurrentQuery] = useLazyCurrentQuery();
 
   const onSubmit = async (data: Login) => {
     try {
       await login(data).unwrap();
-      await triggerCurrentCuery().unwrap();
+      await triggerCurrentQuery();
       navigate('/');
-    } catch (error) {
-      if (hasErrorField(error)) {
-        setError(error.data.error);
+    } catch (err) {
+      if (hasErrorField(err)) {
+        setError(err.data.error);
       }
     }
   };
-
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
       <Input
@@ -57,29 +56,29 @@ export const Login: React.FC<Props> = ({ setSelected }) => {
         name="email"
         label="Email"
         type="email"
-        required="Обов'язкове поле"
+        required="Обязательное поле"
       />
       <Input
         control={control}
         name="password"
         label="Пароль"
         type="password"
-        required="Обов'язкове поле"
+        required="Обязательное поле"
       />
       <ErrorMessage error={error} />
       <p className="text-center text-small">
-        Немає облікового запису?{' '}
+        Нет аккаутна?{' '}
         <Link
           size="sm"
           className="cursor-pointer"
           onPress={() => setSelected('sign-up')}
         >
-          Створіть його!
+          Зарегистрируйтесь
         </Link>
       </p>
       <div className="flex justify-end gap-2">
         <Button fullWidth color="primary" type="submit" isLoading={isLoading}>
-          Ввійти
+          Войти
         </Button>
       </div>
     </form>

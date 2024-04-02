@@ -3,7 +3,7 @@ export function hasErrorField(
 ): err is { data: { error: string } } {
   return (
     typeof err === 'object' &&
-    err != null &&
+    err !== null &&
     'data' in err &&
     typeof err.data === 'object' &&
     err.data !== null &&

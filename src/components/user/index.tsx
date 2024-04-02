@@ -1,5 +1,5 @@
-import { User as NextUiUser } from '@nextui-org/react';
 import React from 'react';
+import { User as NextUiUser } from '@nextui-org/react';
 import { BASE_URL } from '../../constants';
 
 type Props = {
@@ -11,8 +11,8 @@ type Props = {
 
 export const User: React.FC<Props> = ({
   name = '',
-  avatarUrl = '',
   description = '',
+  avatarUrl = '',
   className = '',
 }) => {
   return (

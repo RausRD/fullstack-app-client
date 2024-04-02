@@ -1,27 +1,27 @@
-import React, { useContext } from 'react';
-import { ThemeContext } from '../theme-provider';
 import {
-  Button,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  Button,
 } from '@nextui-org/react';
-import { FaRegMoon } from 'react-icons/fa';
 import { LuSunMedium } from 'react-icons/lu';
+import { FaRegMoon } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import { CiLogout } from 'react-icons/ci';
 import { logout, selectIsAuthenticated } from '../../features/user/userSlice';
 import { useNavigate } from 'react-router-dom';
-import { CiLogout } from 'react-icons/ci';
+import { useContext } from 'react';
+import { ThemeContext } from '../theme-provider';
 
 export const Header = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const dispath = useDispatch();
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispath(logout());
+  const hadleLogout = () => {
+    dispatch(logout());
     localStorage.removeItem('token');
     navigate('/auth');
   };
@@ -31,6 +31,7 @@ export const Header = () => {
       <NavbarBrand>
         <p className="font-bold text-inherit">Network Social</p>
       </NavbarBrand>
+
       <NavbarContent justify="end">
         <NavbarItem
           className="text-3xl cursor-pointer lg:flex"
@@ -44,9 +45,9 @@ export const Header = () => {
               color="default"
               variant="flat"
               className="gap-2"
-              onClick={handleLogout}
+              onClick={hadleLogout}
             >
-              <CiLogout /> <span>Вийти</span>
+              <CiLogout /> <span>Выйти</span>
             </Button>
           )}
         </NavbarItem>

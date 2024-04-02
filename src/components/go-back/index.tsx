@@ -8,6 +8,7 @@ export const GoBack = () => {
   const handleGoBack = () => {
     navigate(-1);
   };
+
   return (
     <div
       onClick={handleGoBack}

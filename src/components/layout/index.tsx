@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { Header } from '../header';
+import { useEffect } from 'react';
 import { Container } from '../container';
 import { NavBar } from '../nav-bar';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Profile } from '../profile';
 import { useSelector } from 'react-redux';
 import {
-  selectIsAuthenticated,
   selectUser,
+  selectIsAuthenticated,
 } from '../../features/user/userSlice';
-import { Profile } from "../profile"
+import { Header } from '../header';
 
 export const Layout = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -20,6 +20,7 @@ export const Layout = () => {
       navigate('/auth');
     }
   }, []);
+
   return (
     <>
       <Header />
@@ -31,9 +32,7 @@ export const Layout = () => {
           <Outlet />
         </div>
         <div className="p-4 flex-2">
-          <div className="flex flex-col gap-5">
-            {!user && <Profile/>}
-          </div>
+          <div className="flex flex-col gap-5">{!user && <Profile />}</div>
         </div>
       </Container>
     </>

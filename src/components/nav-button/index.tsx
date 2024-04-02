@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from '../button';
 import { Link } from 'react-router-dom';
+import { Button } from '../button';
 
 type Props = {
   children: React.ReactNode;

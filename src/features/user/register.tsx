@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
 import { Input } from '../../components/input';
 import { useForm } from 'react-hook-form';
 import { Button, Link } from '@nextui-org/react';
 import { useRegisterMutation } from '../../app/services/userApi';
-import { hasErrorField } from '../../utils/has-error-field';
 import { ErrorMessage } from '../../components/error-message';
+import { hasErrorField } from '../../utils/has-error-field';
+import { useState } from 'react';
 
 type Register = {
   email: string;
@@ -16,7 +16,7 @@ type Props = {
   setSelected: (value: string) => void;
 };
 
-export const Register: React.FC<Props> = ({ setSelected }) => {
+export const Register = ({ setSelected }: Props) => {
   const {
     handleSubmit,
     control,
@@ -31,16 +31,16 @@ export const Register: React.FC<Props> = ({ setSelected }) => {
     },
   });
 
-  const [register, { isLoading }] = useRegisterMutation();
+  const [register] = useRegisterMutation();
   const [error, setError] = useState('');
 
   const onSubmit = async (data: Register) => {
     try {
       await register(data).unwrap();
       setSelected('login');
-    } catch (error) {
-      if (hasErrorField(error)) {
-        setError(error.data.error);
+    } catch (err) {
+      if (hasErrorField(err)) {
+        setError(err.data.error);
       }
     }
   };
@@ -49,39 +49,39 @@ export const Register: React.FC<Props> = ({ setSelected }) => {
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
       <Input
         control={control}
+        required="Обязательное поле"
+        label="Имя"
         name="name"
-        label="Ім'я"
-        type="text"
-        required="Обов'язкове поле"
       />
       <Input
         control={control}
         name="email"
         label="Email"
         type="email"
-        required="Обов'язкове поле"
+        required="Обязательное поле"
       />
       <Input
         control={control}
         name="password"
         label="Пароль"
         type="password"
-        required="Обов'язкове поле"
+        required="Обязательное поле"
       />
       <ErrorMessage error={error} />
+
       <p className="text-center text-small">
-        Вже є обліковий запис?{' '}
+        Уже есть аккаунт?{' '}
         <Link
           size="sm"
           className="cursor-pointer"
           onPress={() => setSelected('login')}
         >
-          Увійдіть
+          Войдите
         </Link>
       </p>
-      <div className="flex gap-2 justify-end">
-        <Button fullWidth color="primary" type="submit" isLoading={isLoading}>
-          Зареєструватись
+      <div className="flex justify-end gap-2">
+        <Button fullWidth color="primary" type="submit">
+          Зарегистрироваться
         </Button>
       </div>
     </form>

@@ -3,7 +3,7 @@ import React from 'react';
 
 type Props = {
   children: React.ReactNode;
-  icon: JSX.Element;
+  icon?: JSX.Element;
   className?: string;
   type?: 'button' | 'submit' | 'reset';
   fullWidth?: boolean;
@@ -19,11 +19,11 @@ type Props = {
 
 export const Button: React.FC<Props> = ({
   children,
-  className,
-  color,
   icon,
-  fullWidth,
+  className,
   type,
+  fullWidth,
+  color,
 }) => {
   return (
     <NextButton
