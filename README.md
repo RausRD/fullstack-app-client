@@ -4,6 +4,7 @@
 ### Що тут використовувалось:
 - React 18
 - TypeScript
+- React Router v6.4
 - Redux Toolkit
 - RTK Query
 - React Hook Form
